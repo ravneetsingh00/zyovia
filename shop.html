@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZIOVIA | Shop</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Amazon-like scroll for mobile */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .product-card {
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      background-color: inherit;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: auto;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .product-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 20px;
+      }
+
+      .product-card {
+        min-width: 70%;
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <h1>ZIOVIA</h1>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="products">
+
+<h2>PREMIUM SECTION</h2>
+
+<section class="premium-section">
+  <div class="product-grid">
+    <div class="product-card">
+
+      <div class="premium-tag">Premium</div>
+      
+      <a href="product1.html">
+        <img src="images/tshirt1.jpg" alt="Urban T-Shirt">
+        <h3>Urban T-Shirt</h3>
+        <p>₹<span class="old-price">699</span><b>599</b></p>
+      </a>
+    </div>
+    <!-- Add more product-card divs here -->
+  </div>
+</section>
+
+
+    <section class="products">
+  <h2>Our Collection</h2>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <a href="product1.html">
+        <img src="images/tshirt1.jpg" alt="Urban T-Shirt">
+        <h3>Urban T-Shirt</h3>
+        <p>₹<span class="old-price">699</span><b>599</b></p>
+      </a>
+    </div>
+    <div class="product-card">
+      <a href="product2.html">
+        <img src="images/tshirt2.jpg" alt="Premium Tee">
+        <h3>Premium Tee</h3>
+        <p>₹<span class="old-price">749</span><b>649</b></p>
+      </a>
+    </div>
+    <div class="product-card">
+      <a href="product3.html">
+        <img src="images/tshirt3.jpg" alt="Music Vibes Tee">
+        <h3>Music Vibes Tee</h3>
+        <p>₹<span class="old-price">799</span><b>699</b></p>
+      </a>
+    </div>
+    <div class="product-card">
+      <a href="product4.html">
+        <img src="images/tshirt4.jpg" alt="Classic Hoodie">
+        <h3>Classic Hoodie</h3>
+        <p>₹<span class="old-price">849</span><b>749</b></p>
+      </a>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

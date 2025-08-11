@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart</title>
+
+  <!-- Zen Dots Font -->
+<link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 1rem;
+      background-color: #000000;
+    }
+    h1 {
+      text-align: center;
+    }
+    .cart-container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .cart-item {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      background: #fff;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .cart-item img {
+      width: 100px;
+      border-radius: 10px;
+      margin-right: 1rem;
+    }
+    .item-details {
+      flex: 1;
+      min-width: 200px;
+    }
+    .item-details p {
+      margin: 5px 0;
+    }
+    .remove-btn {
+      background-color: #ff3b3b;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .total {
+      text-align: right;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 1rem;
+      color: white;
+    }
+    .checkout-btn {
+      display: block;
+      margin: 2rem auto 0;
+      background-color: gold;
+      padding: 0.75rem 2rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+
+  /* Header & Nav */
+.header {
+  background-color: #000;
+  padding: 20px 15px;
+  text-align: center;
+}
+
+.brand-name h1 {
+  font-family: 'Zen Dots', sans-serif;
+  color: white;
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.nav-bar {
+  margin-top: 10px;
+}
+
+.nav-bar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-bar ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-bar ul {
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+  }
+}
+
+   
+
+
+  </style>
+</head>
+<body>
+    header class="header">
+  <div class="brand-name">
+    <h1>ZYOVIA</h1>
+  </div>
+  <nav class="nav-bar">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <h1>Your Cart</h1>
+  <div class="cart-container" id="cartContainer"></div>
+  <p class="total" id="cartTotal"></p>
+  <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+
+  <script>
+    function loadCart() {
+      const container = document.getElementById("cartContainer");
+      const totalEl = document.getElementById("cartTotal");
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      container.innerHTML = "";
+      let total = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = "<p>Your cart is empty.</p>";
+        totalEl.textContent = "";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+        itemDiv.innerHTML = `
+          <img src="${item.image}" alt="Product" />
+          <div class="item-details">
+            <p><strong>${item.title}</strong></p>
+            <p>Size: ${item.size}</p>
+            <p>Color: ${item.color}</p>
+            <p>Qty: ${item.quantity}</p>
+            <p>Price: ₹${item.price * item.quantity}</p>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+        `;
+        container.appendChild(itemDiv);
+      });
+
+      totalEl.textContent = `Total: ₹${total.toFixed(2)}`;
+    }
+
+    function removeItem(index) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      loadCart();
+    }
+
+    function checkout() {
+      alert("Redirecting to payment gateway... (To be added)");
+      // Future integration: Replace this with payment gateway redirect
+    }
+
+    loadCart();
+  </script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const addToCartBtn = document.getElementById("addToCartBtn");
+  const buyNowBtn = document.getElementById("buyNowBtn");
+  const stockStatus = document.getElementById("stockStatus");
+  const stockMessage = document.getElementById("stockMessage");
+
+  updateCartCount(); // ✅ Call on load
+
+  const isOutOfStock = stockStatus?.textContent.includes("Out of Stock");
+
+  // Get selected size
+  function getSelectedSize() {
+    const btn = document.querySelector(".size-options button.active");
+    return btn ? btn.innerText : null;
+  }
+
+  // Get selected color
+  function getSelectedColor() {
+    const color = document.querySelector(".color-circle.active");
+    return color ? color.dataset.color : null;
+  }
+
+  // ✅ Show popup message
+  function showPopup(message) {
+    const popup = document.getElementById("popupMessage");
+    if (!popup) return;
+    popup.textContent = message;
+    popup.classList.add("show");
+
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 3000);
+  }
+
+  // Show warning/info message under buttons
+ function showMessage(msg, color = "red") {
+  stockMessage.textContent = msg;
+  stockMessage.style.color = color;
+  stockMessage.style.display = "block";
+
+  setTimeout(() => {
+    stockMessage.textContent = "";
+    stockMessage.style.display = "none";
+  }, 2000); // 2000ms = 2 seconds
+}
+
+
+  // ✅ Reset selections after adding
+  function resetSelections() {
+    document.querySelectorAll(".size-options button").forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".color-circle").forEach(c => c.classList.remove("active"));
+    const quantityInput = document.getElementById("quantity");
+    if (quantityInput) quantityInput.value = 1;
+  }
+
+  // ✅ Main function to handle cart
+  function handleCartAction(redirect = false) {
+    if (isOutOfStock) {
+      showMessage("⚠️ This product is currently out of stock.");
+      return false;
+    }
+
+    const title = document.querySelector(".product-title")?.innerText || "";
+    const price = document.querySelector(".price .new")?.innerText.replace("₹", "") || "0";
+    const image = document.getElementById("mainImage")?.src || "";
+    const size = getSelectedSize();
+    const color = getSelectedColor();
+    const quantity = parseInt(document.getElementById("quantity")?.value || 1);
+
+    if (!size || !color) {
+      showMessage("⚠️ Please select size and color.");
+      return false;
+    }
+
+    const product = {
+      id: Date.now(),
+      title,
+      price: parseFloat(price),
+      image,
+      size,
+      color,
+      quantity
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+    resetSelections();
+
+    if (redirect) {
+      window.location.href = "cart.html";
+    }
+
+    return true;
+  }
+
+  // ✅ Add to Cart Click
+  addToCartBtn.addEventListener("click", () => {
+    const success = handleCartAction(false);
+    if (success) {
+      showPopup("✅ Product added to cart!");
+    }
+  });
+
+  // ✅ Buy Now Click
+  buyNowBtn.addEventListener("click", () => {
+    handleCartAction(true);
+  });
+
+  // ✅ Cart Count Function
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    const cartCount = document.getElementById("cartCount");
+    if (cartCount) cartCount.textContent = totalItems;
+  }
+});
+</script>
+
+
+
+
+
+   <!-- ==== quantity size button==== -->
+
+
+<script>
+  function increaseQty() {
+    const qtyInput = document.getElementById("quantity");
+    qtyInput.value = parseInt(qtyInput.value) + 1;
+  }
+
+  function decreaseQty() {
+    const qtyInput = document.getElementById("quantity");
+    let current = parseInt(qtyInput.value);
+    if (current > 1) {
+      qtyInput.value = current - 1;
+    }
+  }
+</script>
+
+
+
+</body>
+</html>

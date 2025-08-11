@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZYOVIA | About</title>
+  <link rel="stylesheet" href="style.css" />
+   <!-- Zen Dots Font -->
+<link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+</head>
+<body>
+ </head>
+<body>
+<header class="header">
+  <div class="brand-name">
+    <h1>ZYOVIA</h1>
+  </div>
+  <nav class="nav-bar">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+ 
+<hr class="section-divider">
+
+
+
+
+
+ <!-- 🌟 About: Split Layout -->
+<section class="about-section fade-in">
+  <div class="about-content">
+    <div class="about-text">
+      <h2>OUR JOURNEY</h2>
+    <p>
+      Born from a bold vision and built for the fearless, <strong>ZYOVIA</strong> isn't just a clothing brand — it's a movement. 
+      We started with one goal: to craft clothing that speaks louder than words. 
+      Every piece we create is designed to celebrate individuality, confidence, and raw street energy.
+    </p>
+    
+    <p>
+      We're not chasing trends. We're building a legacy.  
+      Welcome to the future of fashion. Welcome to <strong>ZYOVIA</strong>.
+    </p>
+  </div>
+   <div class="about-image">
+   <img src="images/ourjourney.jpg" alt="Our Journey">
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<!-- 🌟 Founder Highlight -->
+<section class="founder-section fade-in">
+  <div class="founder-card">
+    <div class="founder-text">
+      <h3>Meet the Founder</h3>
+      <p>""Fashion is more than style — it’s self-expression.</p> 
+      <p>ZYOVIA was born from the voice I couldn’t find in other clothes,so I created it for those who dare to be different."
+      <p>
+          KARAN-VIR SINGH, Founder & Creative Visionary of ZYOVIA</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+  <section class="quality-section">
+  <div class="quality-content">
+    <h2>SIGNATURE QUALITY</h2>
+    <p>
+      At <strong>ZYOVIA</strong>, quality isn’t just a promise — it’s our foundation. From the first stitch to the final finish, 
+      we obsess over the details to ensure every piece meets the highest standards of durability, comfort, and design.
+    </p>
+    <p>
+      We use carefully sourced materials, partner with skilled artisans, and test every product to perform in real-world wear. 
+      Because great fashion doesn’t just look good — it lasts, feels right, and empowers your daily movement.
+    </p>
+    <p>
+      When you wear ZYOVIA, you're not just choosing style — you're choosing substance.
+    </p>
+     </div>
+   <div class="about-image">
+   <img src="images/ourquality.jpg" alt="Our Journey">
+    </div>
+  </div>
+</section>
+
+
+  <script>
+  // Reveal on scroll
+  const faders = document.querySelectorAll('.fade-in');
+
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  faders.forEach(el => appearOnScroll.observe(el));
+</script>
+
+
+  <footer>
+    <p>&copy; 2025 ZIOVIA. Crafted to Live.</p>
+  </footer>
+
+  
+</body>
+</html>

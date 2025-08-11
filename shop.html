@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZYOVIA | Crafted to Live</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Zen Dots Font -->
+<link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+</head>
+<body>
+   
+
+<header class="header">
+  <div class="brand-name">
+    <h1>ZYOVIA</h1>
+  </div>
+  <nav class="nav-bar">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html">Add to Cart</a></li>
+    </ul>
+    
+  </nav>
+  <!-- cart logo  -->
+    <a href="cart.html" class="cart-icon">
+  🛒
+  <span class="cart-count" id="cartCount">0</span>
+</a>
+</header>
+
+
+
+<hr class="section-divider" />
+
+
+
+  <section class="products">
+     <div class="container"></div>
+    <h2>ZYOVIA UNIVERSE</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <a href="product1.html">
+          <img src="images/tshirt1.jpg" alt="Urban T-Shirt" />
+          <h3>Urban T-Shirt</h3>
+          <p>₹1299</p>
+        </a>
+      </div>
+
+      <div class="product-card">
+        <a href="product2.html">
+          <img src="images/tshirt2.jpg" alt="Premium Tee" />
+          <h3>Premium Tee</h3>
+          <p>₹1499</p>
+        </a>
+      </div>
+
+      <div class="product-card">
+        <a href="product3.html">
+          <img src="images/tshirt3.jpg" alt="Music Vibes Tee" />
+          <h3>Music Vibes Tee</h3>
+          <p>₹1399</p>
+        </a>
+      </div>
+
+      <div class="product-card">
+        <a href="product4.html">
+          <img src="images/tshirt4.jpg" alt="Music Vibes Tee" />
+          <h3>Music Vibes Tee</h3>
+          <p>₹1399</p>
+        </a>
+      </div>
+
+      <div class="product-card">
+        <a href="product5.html">
+          <img src="images/tshirt5.jpg" alt="Music Vibes Tee" />
+          <h3>Music Vibes Tee</h3>
+          <p>₹1399</p>
+        </a>
+      </div>
+
+      <div class="product-card">
+        <a href="product6.html">
+          <img src="images/tshirt6.jpg" alt="Music Vibes Tee" />
+          <h3>Music Vibes Tee</h3>
+          <p>₹1399</p>
+        </a>
+      </div>
+
+      <div class="product-card">
+        <a href="product7.html">
+          <img src="images/tshirt7.jpg" alt="Music Vibes Tee" />
+          <h3>Music Vibes Tee</h3>
+          <p>₹1399</p>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const addToCartBtn = document.getElementById("addToCartBtn");
+  const buyNowBtn = document.getElementById("buyNowBtn");
+  const stockStatus = document.getElementById("stockStatus");
+  const stockMessage = document.getElementById("stockMessage");
+
+  updateCartCount(); // ✅ Call on load
+
+  const isOutOfStock = stockStatus?.textContent.includes("Out of Stock");
+
+  // Get selected size
+  function getSelectedSize() {
+    const btn = document.querySelector(".size-options button.active");
+    return btn ? btn.innerText : null;
+  }
+
+  // Get selected color
+  function getSelectedColor() {
+    const color = document.querySelector(".color-circle.active");
+    return color ? color.dataset.color : null;
+  }
+
+  // ✅ Show popup message
+  function showPopup(message) {
+    const popup = document.getElementById("popupMessage");
+    if (!popup) return;
+    popup.textContent = message;
+    popup.classList.add("show");
+
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 3000);
+  }
+
+  // Show warning/info message under buttons
+  function showMessage(msg, color = "red") {
+    stockMessage.textContent = msg;
+    stockMessage.style.color = color;
+  }
+
+  // ✅ Reset selections after adding
+  function resetSelections() {
+    document.querySelectorAll(".size-options button").forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".color-circle").forEach(c => c.classList.remove("active"));
+    const quantityInput = document.getElementById("quantity");
+    if (quantityInput) quantityInput.value = 1;
+  }
+
+  // ✅ Main function to handle cart
+  function handleCartAction(redirect = false) {
+    if (isOutOfStock) {
+      showMessage("⚠️ This product is currently out of stock.");
+      return false;
+    }
+
+    const title = document.querySelector(".product-title")?.innerText || "";
+    const price = document.querySelector(".price .new")?.innerText.replace("₹", "") || "0";
+    const image = document.getElementById("mainImage")?.src || "";
+    const size = getSelectedSize();
+    const color = getSelectedColor();
+    const quantity = parseInt(document.getElementById("quantity")?.value || 1);
+
+    if (!size || !color) {
+      showMessage("⚠️ Please select size and color.");
+      return false;
+    }
+
+    const product = {
+      id: Date.now(),
+      title,
+      price: parseFloat(price),
+      image,
+      size,
+      color,
+      quantity
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+    resetSelections();
+
+    if (redirect) {
+      window.location.href = "cart.html";
+    }
+
+    return true;
+  }
+
+  // ✅ Add to Cart Click
+  addToCartBtn.addEventListener("click", () => {
+    const success = handleCartAction(false);
+    if (success) {
+      showPopup("✅ Product added to cart!");
+    }
+  });
+
+  // ✅ Buy Now Click
+  buyNowBtn.addEventListener("click", () => {
+    handleCartAction(true);
+  });
+
+  // ✅ Cart Count Function
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    const cartCount = document.getElementById("cartCount");
+    if (cartCount) cartCount.textContent = totalItems;
+  }
+});
+</script>
+
+
+  <footer>
+    <p>&copy; 2025 ZYOVIA. Crafted to Live.</p>
+  </footer>
+</body>
+</html>

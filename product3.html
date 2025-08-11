@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Page - ZIOVIA</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #333;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .product-gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .main-image {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+
+    .thumbnails {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .thumbnails img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .thumbnails img.active,
+    .thumbnails img:hover {
+      border-color: #000;
+    }
+
+    .product-info {
+      margin-top: 20px;
+    }
+
+    .product-info h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .price .old {
+      text-decoration: line-through;
+      color: #888;
+      margin-right: 10px;
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin: 15px 0 5px;
+    }
+
+    .color-options, .size-options {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+   .color-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.color-circle:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Selected (active) state */
+.color-circle.active {
+  border-color: green;
+  box-shadow: 0 0 8px rgba(0, 128, 0, 0.6);
+}
+
+
+    .size-options button {
+      padding: 8px 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .size-options button.active {
+      background-color: #000;
+      color: #fff;
+    }
+
+    .action-buttons {
+      margin-top: 20px;
+    }
+
+    .action-buttons button {
+      padding: 12px 24px;
+      margin-right: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+      /* Add to Cart Button */
+.add-cart {
+  background-color: green;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.add-cart:hover {
+  background-color: darkgreen;
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(0, 128, 0, 0.4);
+}
+
+/* Buy Now Button */
+.buy-now {
+  background-color: gold;
+  color: black;
+  transition: all 0.3s ease;
+}
+
+.buy-now:hover {
+  background-color: #ffce00;
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(255, 206, 0, 0.4);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+    .description {
+      margin-top: 30px;
+      background-color: #f9f5e8;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+   
+
+.thumbnails img:hover {
+  transform: scale(1.05);
+  transition: 0.3s ease;
+}
+
+.main-image:hover {
+  transform: scale(1.05);
+  transition: 0.4s ease;
+}
+
+
+/* style of products who are present below the description */
+
+.related-products {
+  margin-top: 40px;
+}
+
+.related-products h3 {
+  margin-bottom: 15px;
+}
+
+.related-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-card {
+  width: 150px;
+  text-align: center;
+  font-size: 14px;
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.3s ease;
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+  color: black;
+}
+
+
+
+/* return policy style */
+
+
+.accordion-section {
+  margin-top: 40px;
+}
+
+.accordion-section h3 {
+  cursor: pointer;
+  padding: 12px;
+  background: #f0f0f0;
+  margin-top: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.accordion-section h3:hover {
+  background: #e2e2e2;
+}
+
+.accordion-content {
+  padding: 10px 15px;
+  background: #fafafa;
+  display: none;
+  border-radius: 0 0 6px 6px;
+}
+
+
+/* stock available or not*/
+
+.stock-status {
+  font-weight: 500;
+  margin: 10px 0;
+  font-size: 16px;
+  color: red;
+}
+
+.stock-status:contains("In Stock") {
+  color: green;
+}
+.stock-status:contains("Out of Stock") {
+  color: red;
+}
+
+
+.stock-msg {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+/* sixe of 2 2 paiirs */
+
+
+
+/* Global Grid Layout for Product Sections */
+.product-grid, .related-grid, .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Adjust width per item */
+  gap: 20px; /* Space between items */
+  justify-items: center;
+  padding: 10px;
+}
+
+/* For Mobile (Less than 768px) */
+@media (max-width: 768px) {
+  .product-grid, .related-grid, .gallery-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+  }
+}
+
+/* For Tablets and Larger (768px+) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .product-grid, .related-grid, .gallery-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+  }
+}
+
+/* For Desktop (Larger than 1024px) */
+@media (min-width: 1024px) {
+  .product-grid, .related-grid, .gallery-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+  }
+}
+
+
+/* footer */
+
+
+.footer-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 10px;
+  background-color: #000;
+  color: white;
+  font-size: 16px;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.footer-nav a:hover {
+  background-color: #222;
+}
+
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* pop up message */
+
+.popup-message {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background-color: #2ecc71;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.popup-message.show {
+  display: block;
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+
+/* ✅ Cart Icon (Fixed Top-Right) */
+.cart-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  color: #000;
+  text-decoration: none;
+  z-index: 1000;
+}
+
+.cart-icon .cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+
+
+/* SIZE BUTTONS - GREEN HOVER + SELECTION */
+.size-options button {
+  padding: 8px 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  cursor: pointer;
+  font-weight: bold;
+  color: black;
+  transition: all 0.3s ease;
+}
+
+.size-options button:hover {
+  background-color: #d4f5d1;  /* Light green hover */
+  border-color: green;
+  color: black;
+}
+
+.size-options button.active {
+  background-color: green;
+  color: white;
+  border-color: green;
+}
+
+
+
+/* quantity button */
+.quantity-section {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: bold;
+}
+
+.quantity-box {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 40px;
+}
+
+.qty-btn {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 0 14px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  height: 100%;
+}
+
+.qty-btn:hover {
+  background-color: #ddd;
+}
+
+.quantity-box input[type="number"] {
+  width: 50px;
+  text-align: center;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  height: 100%;
+}
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+
+   <!-- cart logo  -->
+    <a href="cart.html" class="cart-icon">
+  🛒
+  <span class="cart-count" id="cartCount">0</span>
+</a>
+
+
+  <div class="container">
+    <!-- Product Gallery -->
+    <div class="product-gallery">
+      <img src="images/product3.jpg" id="mainImage" class="main-image" alt="Main Product Image" />
+
+      <div class="thumbnails">
+        <img src="images/tshirt3.jpg" class="thumb active" onclick="changeImage(this)" />
+        <img src="images/tshirt3a.jpg" class="thumb" onclick="changeImage(this)" />
+        <img src="images/tshirt3b.jpg" class="thumb" onclick="changeImage(this)" />
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-info">
+      <h1 class="product-title">Black Oversized T-Shirt</h1>
+
+      <div class="price">
+        <span class="old">₹999</span>
+        <span class="new">₹699</span>
+      </div>
+
+      <!-- product avaliability or not. if ✅ In Stock</div> for stock yess  -->
+      <!--❌ Out of Stock</div> use this-->
+      <div class="stock-status" id="stockStatus">✅ In Stock</div>
+
+
+<div class="section-title">Select Color:</div>
+<div class="color-options">
+  <div class="color-circle" style="background-color: black;" data-color="Black" onclick="selectColor(this)"></div>
+  <div class="color-circle" style="background-color: red;" data-color="Red" onclick="selectColor(this)"></div>
+  <div class="color-circle" style="background-color: white;" data-color="White" onclick="selectColor(this)"></div>
+</div>
+
+
+      <div class="section-title">Select Size:</div>
+<div class="size-options">
+  <button class="size" onclick="selectSize(this)">S</button>
+  <button class="size" onclick="selectSize(this)">M</button>
+  <button class="size" onclick="selectSize(this)">L</button>
+  <button class="size" onclick="selectSize(this)">XL</button>
+</div>
+
+
+ <!--quantity managment-->
+     <div class="quantity-section">
+  <label for="quantity">Qty:</label>
+  <div class="quantity-box">
+    <button type="button" onclick="decreaseQty()" class="qty-btn">−</button>
+    <input type="number" id="quantity" value="1" min="1" />
+    <button type="button" onclick="increaseQty()" class="qty-btn">+</button>
+  </div>
+</div>
+
+
+
+         <div class="action-buttons">
+  <!-- Popup Message Box -->
+  <div id="popupMessage" class="popup-message"></div>
+
+  <!-- ✅ Add these class attributes -->
+  <button id="addToCartBtn" class="add-cart">Add to Cart</button>
+  <button id="buyNowBtn" class="buy-now">Buy Now</button>
+
+  <div id="stockMessage" class="stock-msg"></div>
+</div>
+
+
+
+      </div>
+  
+      <div class="description">
+        <h3>Description</h3>
+        <p>This premium oversized black t-shirt features breathable 100% cotton fabric with a smooth graphic print. It is designed for all-day comfort, with a street-style edge.</p>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- Accordion for Return & Shipping -->
+<section class="accordion-section">
+  <h3 onclick="toggleAccordion(this)">Shipping & Delivery +</h3>
+  <div class="accordion-content">
+    <p>We deliver all over India within 4–7 working days. Tracking details will be sent via SMS/email after dispatch.</p>
+  </div>
+
+  <h3 onclick="toggleAccordion(this)">Return Policy +</h3>
+  <div class="accordion-content">
+    <p>Easy 7-day return policy. Message us on WhatsApp for hassle-free pickup and refund.</p>
+  </div>
+</section>
+<script>
+  function toggleAccordion(header) {
+    const content = header.nextElementSibling;
+    content.style.display = content.style.display === "block" ? "none" : "block";
+    header.textContent = header.textContent.includes("+") 
+      ? header.textContent.replace("+", "-") 
+      : header.textContent.replace("-", "+");
+  }
+</script>
+
+<!-- You May Also Like Section -->
+<section class="related-products">
+  <h3>You May Also Like</h3>
+  <div class="related-grid">
+    <a href="product2.html" class="product-card">
+      <img src="images/tshirt3.jpg" alt="Product 2" />
+      <p>White Oversized Tee - ₹699</p>
+    </a>
+    <a href="product3.html" class="product-card">
+      <img src="images/tshirt3a.jpg" alt="Product 3" />
+      <p>Street Style Tee - ₹749</p>
+    </a>
+    <a href="product4.html" class="product-card">
+      <img src="images/ptshirt3b.jpg" alt="Product 4" />
+      <p>Minimal Graphic Tee - ₹799</p>
+    </a>
+  </div>
+</section>
+
+<!-- stock available or not -->
+
+<script>
+  window.onload = function () {
+    const stockStatus = document.getElementById("stockStatus");
+    const addToCartBtn = document.getElementById("addToCartBtn");
+    const buyNowBtn = document.getElementById("buyNowBtn");
+    const stockMessage = document.getElementById("stockMessage");
+
+    const isOutOfStock = stockStatus.textContent.includes("Out of Stock");
+
+    if (isOutOfStock) {
+      // Visually style buttons as inactive
+      addToCartBtn.style.backgroundColor = "#ccc";
+      buyNowBtn.style.backgroundColor = "#ccc";
+      addToCartBtn.style.cursor = "not-allowed";
+      buyNowBtn.style.cursor = "not-allowed";
+
+      // Add click listeners to show warning
+      addToCartBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        stockMessage.textContent = "⚠️ This product is currently out of stock.";
+      });
+
+      buyNowBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        stockMessage.textContent = "⚠️ This product is currently out of stock.";
+      });
+    }
+  };
+</script>
+
+
+
+<!-- cart javascript -->
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const addToCartBtn = document.getElementById("addToCartBtn");
+  const buyNowBtn = document.getElementById("buyNowBtn");
+  const stockStatus = document.getElementById("stockStatus");
+  const stockMessage = document.getElementById("stockMessage");
+
+  updateCartCount(); // ✅ Call on load
+
+  const isOutOfStock = stockStatus?.textContent.includes("Out of Stock");
+
+  // Get selected size
+  function getSelectedSize() {
+    const btn = document.querySelector(".size-options button.active");
+    return btn ? btn.innerText : null;
+  }
+
+  // Get selected color
+  function getSelectedColor() {
+    const color = document.querySelector(".color-circle.active");
+    return color ? color.dataset.color : null;
+  }
+
+  // ✅ Show popup message
+  function showPopup(message) {
+    const popup = document.getElementById("popupMessage");
+    if (!popup) return;
+    popup.textContent = message;
+    popup.classList.add("show");
+
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 3000);
+  }
+
+  // Show warning/info message under buttons
+  function showMessage(msg, color = "red") {
+  stockMessage.textContent = msg;
+  stockMessage.style.color = color;
+  stockMessage.style.display = "block";
+
+  setTimeout(() => {
+    stockMessage.textContent = "";
+    stockMessage.style.display = "none";
+  }, 2000); // 2000ms = 2 seconds
+}
+
+
+  // ✅ Reset selections after adding
+  function resetSelections() {
+    document.querySelectorAll(".size-options button").forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".color-circle").forEach(c => c.classList.remove("active"));
+    const quantityInput = document.getElementById("quantity");
+    if (quantityInput) quantityInput.value = 1;
+  }
+
+  // ✅ Main function to handle cart
+  function handleCartAction(redirect = false) {
+    if (isOutOfStock) {
+      showMessage("⚠️ This product is currently out of stock.");
+      return false;
+    }
+
+    const title = document.querySelector(".product-title")?.innerText || "";
+    const price = document.querySelector(".price .new")?.innerText.replace("₹", "") || "0";
+    const image = document.getElementById("mainImage")?.src || "";
+    const size = getSelectedSize();
+    const color = getSelectedColor();
+    const quantity = parseInt(document.getElementById("quantity")?.value || 1);
+
+    if (!size || !color) {
+      showMessage("⚠️ Please select size and color.");
+      return false;
+    }
+
+    const product = {
+      id: Date.now(),
+      title,
+      price: parseFloat(price),
+      image,
+      size,
+      color,
+      quantity
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+    resetSelections();
+
+    if (redirect) {
+      window.location.href = "cart.html";
+    }
+
+    return true;
+  }
+
+  // ✅ Add to Cart Click
+  addToCartBtn.addEventListener("click", () => {
+    const success = handleCartAction(false);
+    if (success) {
+      showPopup("✅ Product added to cart!");
+    }
+  });
+
+  // ✅ Buy Now Click
+  buyNowBtn.addEventListener("click", () => {
+    handleCartAction(true);
+  });
+
+  // ✅ Cart Count Function
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    const cartCount = document.getElementById("cartCount");
+    if (cartCount) cartCount.textContent = totalItems;
+  }
+});
+</script>
+
+
+  <!-- ==== quantity size button==== -->
+
+
+<script>
+  function increaseQty() {
+    const qtyInput = document.getElementById("quantity");
+    qtyInput.value = parseInt(qtyInput.value) + 1;
+  }
+
+  function decreaseQty() {
+    const qtyInput = document.getElementById("quantity");
+    let current = parseInt(qtyInput.value);
+    if (current > 1) {
+      qtyInput.value = current - 1;
+    }
+  }
+</script>
+
+
+
+
+
+
+
+  <script>
+    function changeImage(element) {
+      document.getElementById("mainImage").src = element.src;
+      document.querySelectorAll(".thumb").forEach(el => el.classList.remove("active"));
+      element.classList.add("active");
+    }
+
+    function selectColor(element) {
+      document.querySelectorAll(".color-circle").forEach(el => el.classList.remove("active"));
+      element.classList.add("active");
+    }
+
+    function selectSize(button) {
+      document.querySelectorAll(".size-options button").forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+    }
+  </script>
+
+  
+
+  <!-- ==== Footer Navigation Tabs ==== -->
+<footer class="footer-nav">
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</footer>
+
+
+</body>
+</html>
